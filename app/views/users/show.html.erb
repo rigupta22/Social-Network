@@ -1,1 +1,2 @@
-<h1>Hello User!!!</h1>
+<h1>Hello User!!! <%= @user.username %></h1><br>
+<%=link_to 'logout', logout_path, method: :delete %>
