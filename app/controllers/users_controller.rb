@@ -13,7 +13,14 @@ class UsersController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    if logged_in?
+      @user = User.find(params[:id])
+    else
+      flash.now[:danger] = 'Please login'
+      render 'sessions/new'
+    end
+  end
 
   private
 
