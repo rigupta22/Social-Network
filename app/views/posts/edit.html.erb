@@ -1,0 +1,15 @@
+<%=form_with(model: @post, url: update_posts_path, local: true) do |form| %>
+<p>
+  <%= form.label :Username %>
+  <%= form.text_field :poster %><br>
+</p>
+
+<p>
+  <%= form.label :Post_Status %><br>
+  <%= form.text_area :body %>
+</p>
+
+<p>
+  <%= form.submit %>
+</p>
+<% end %>
