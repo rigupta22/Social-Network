@@ -1,0 +1,10 @@
+<%= form_with(model:[ current_user, Post.new ], local: true, id: 'create-post', data: {user_id: current_user.id}) do |form| %>
+<p>
+  <%= form.label :Post_Status %><br>
+  <%= form.text_area :body, id: "post-#{current_user.id}" %>
+</p>
+
+<p>
+  <%= form.submit class: "create-form" %>
+</p>
+<% end %>

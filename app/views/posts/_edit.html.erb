@@ -1,0 +1,21 @@
+<div id = "user-post-<%= post.id %>">
+<%= form_with(model: post, url: update_posts_path(current_user, post), local: true, id: 'update-post', data: {post_id: post.id}) do |form| %>
+  <p class = 'edit-field'>
+    <%= form.label :Post_Status %><br>
+    <%= form.text_area :body, id: "post_text_#{post.id}" %>
+  </p>
+
+  <p class = 'show-field post-body'>
+    <strong><%= current_user.username %> :</strong>
+    <%= post.body %>
+  </p>
+  <p class = 'edit-field'>
+    <%= form.submit class: 'submit -form' %>
+    <%= link_to "Cancel",'javascript:;', class: 'cancel-edit' %>
+  </p>
+<% end %>
+<p class = 'show-field'>
+  <%= link_to 'Delete', delete_posts_path(current_user, post), class: 'delete-post btn btn-danger fa fa-trash-o fa-lg' %>
+  <%= link_to 'Edit', 'javascript:;', class: 'edit-post btn default fa fa-pencil' %>
+</p>
+</div>

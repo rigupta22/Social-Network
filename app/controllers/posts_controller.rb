@@ -1,37 +1,25 @@
 # posts controller
 class PostsController < ApplicationController
-  def create
-    @user = User.find(params[:user_id])
-    @post = @user.posts.create(post_params)
-    redirect_to @user
-  end
+  before_action :post, except: [:create]
 
-  def edit
-    @user = User.find(params[:user_id])
-    @post = @user.posts.find(params[:id])
+  def create
+    @post = current_user.posts.create(post_params)
+    render json: { data: (render_to_string partial: '/posts/edit',
+                                           locals: { post: @post }) }
   end
 
   def update
-    @user = User.find(params[:user_id])
-    @post = @user.posts.find(params[:id])
-    if @post.update(post_params)
-      redirect_to @user
-    else
-      flash.now[:alert] = 'Please fill the fields'
-      render :edit
-    end
+    render json: { post: @post, user: current_user.username } if @post.update(post_params)
   end
 
   def destroy
-    @user = User.find(params[:user_id])
-    @post = @user.posts.find(params[:id])
     @post.destroy
-    redirect_to @user
+    render json: { post: @post }
   end
 
   private
 
   def post_params
-    params.require(:post).permit(:poster, :body)
+    params.require(:post).permit(:body)
   end
 end
