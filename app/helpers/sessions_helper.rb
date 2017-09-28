@@ -9,7 +9,8 @@ module SessionsHelper
   end
 
   def logged_in?
-    current_user
+    return if current_user
+    redirect_to login_path
   end
 
   def log_out
