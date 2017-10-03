@@ -1,21 +1,25 @@
 <div id = "user-post-<%= post.id %>">
-<%= form_with(model: post, url: update_posts_path(current_user, post), local: true, id: 'update-post', data: {post_id: post.id}) do |form| %>
-  <p class = 'edit-field'>
-    <%= form.label :Post_Status %><br>
-    <%= form.text_area :body, id: "post_text_#{post.id}" %>
-  </p>
-
-  <p class = 'show-field post-body'>
-    <strong><%= current_user.username %> :</strong>
-    <%= post.body %>
-  </p>
-  <p class = 'edit-field'>
-    <%= form.submit class: 'submit -form' %>
-    <%= link_to "Cancel",'javascript:;', class: 'cancel-edit' %>
-  </p>
+  <%= form_with(model: post, url: post_path(post), local: true, id: 'update-post', data: {post_id: post.id}) do |form| %>
+    <p class = 'edit-field'>
+      <%= form.label :Post_Status %><br>
+      <%= form.text_area :body, id: "post_text_#{post.id}" %><br>
+      <%= form.submit class: 'submit-form' %>
+      <%= link_to "Cancel",'javascript:;', class: 'cancel-edit', data: { post_id: post.id }  %>
+    </p>
+    <div class = 'show-field post' >
+      <div class = 'post-body'>
+        <strong><%= current_user.username %> :</strong>
+        <%= post.body %>
+      </div>
+      <div class="dropdown">
+        <button class=" btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+        <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'Delete', post_path(post), class: 'delete-post fa fa-trash-o', data: { post_id: post.id } %></li>
+            <li> <%= link_to 'Edit', 'javascript:;', class: 'edit-post  fa fa-pencil', data: { post_id: post.id } %></li>
+          </ul>
+      </div>
+    </div><br><br>
 <% end %>
-<p class = 'show-field'>
-  <%= link_to 'Delete', delete_posts_path(current_user, post), class: 'delete-post btn btn-danger fa fa-trash-o fa-lg' %>
-  <%= link_to 'Edit', 'javascript:;', class: 'edit-post btn default fa fa-pencil' %>
-</p>
+    <%= render partial: 'comments/comment', locals: {post: post} %>
 </div>

@@ -1,0 +1,9 @@
+<div class = "show-field" >
+        <%= render partial: 'comments/new', locals: {post: post} %>
+        <h4>Comments</h4>
+        <div class="<%= post.id %>">
+        <% post.comments.reverse.each do |comment| %>
+          <%= render partial: 'comments/edit', locals: {comment: comment, post: post} %>
+        <% end %>
+        </div>
+</div><br><br>

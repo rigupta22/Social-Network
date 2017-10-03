@@ -1,33 +1,33 @@
-$(document).on('click','.edit-post',function(){
-  var a = "#user-post-" + this.getAttribute('data-post-id')
+$(document).on('click','.edit-comment',function(){
+  var a = "#user-comment-" + this.getAttribute('data-comment-id')
   $(a).find('.show-field').hide();
   $(a).find('.edit-field').show();
 });
 
-$(document).on('click','.delete-post',function(e){
+$(document).on('click','.delete-comment',function(e){
   e.preventDefault();
-  var a = "#user-post-" + this.getAttribute('data-post-id')
+  var a = "#user-comment-" + this.getAttribute('data-comment-id')
   $.ajax({
       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       url: this.getAttribute('href'),
       type: "DELETE",
       success: function(result) {
-        debugger
         $(a).html(result);
       }
     });
 });
 
 $(document).on('click','.cancel-edit',function(){
-  var a = "#user-post-" + this.getAttribute('data-post-id')
+  var a = "#user-comment-" + this.getAttribute('data-comment-id')
   $(a).find('.show-field').show();
   $(a).find('.edit-field').hide();
 });
 
-$(document).on('submit','#create-post', function(e){
+$(document).on('submit','#create-comment', function(e){
   e.preventDefault();
-  var user_id = this.getAttribute('data-user-id')
-  var text_filed_id = "#" + ("post-" + user_id )
+  var post_id = this.getAttribute('data-post-id')
+  var text_filed_id = "#" + ("comment-" + post_id )
+  var a = "." + post_id
   if ($(text_filed_id).val() != "")
   {
     $.ajax({
@@ -35,7 +35,7 @@ $(document).on('submit','#create-post', function(e){
       method: "POST",
       data: $(this).serialize(),
       success: function(result) {
-        $('.user-posts').prepend(result.data)
+        $(a).prepend(result.data)
         $(text_filed_id).val("")
         $('.create-form').prop("disabled", false);
       }
@@ -43,10 +43,10 @@ $(document).on('submit','#create-post', function(e){
   }
 });
 
-$(document).on('submit','#update-post', function(e){
+$(document).on('submit','#update-comment', function(e){
   e.preventDefault();
-  var post_id = this.getAttribute('data-post-id')
-  var text_filed_id = "#" + ("post_text_" + post_id )
+  var comment_id = this.getAttribute('data-comment-id')
+  var text_filed_id = "#" + ("comment_text_" + comment_id )
   var a = $(this.parentElement);
   if ($(text_filed_id).val() != "")
   {
@@ -57,7 +57,7 @@ $(document).on('submit','#update-post', function(e){
       success: function(result) {
         $(a.find('.show-field')).show();
         $(a.find('.edit-field')).hide();
-        a.find('.post-body').html(" <strong>"+ result.user + " :</strong> "+ result.post.body);
+        a.find('.comment-body').html(" <strong>"+ result.user + " :</strong> "+ result.comment.body);
         $('.submit-form').prop("disabled", false);
       }
     });

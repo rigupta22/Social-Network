@@ -1,6 +1,6 @@
 # posts controller
 class PostsController < ApplicationController
-  before_action :post, except: [:create]
+  before_action :set_post, except: [:create]
 
   def create
     @post = current_user.posts.create(post_params)
@@ -18,6 +18,10 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def set_post
+    @post = current_user.posts.find(params[:id])
+  end
 
   def post_params
     params.require(:post).permit(:body)
