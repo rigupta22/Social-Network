@@ -6,19 +6,20 @@
       <%= form.submit class: 'submit-form' %>
       <%= link_to "Cancel",'javascript:;', class: 'cancel-edit', data: { comment_id: comment.id }  %>
     </p>
-    <div class = 'show-field' >
+    <div class = 'show-field comment' >
       <div class = 'comment-body'>
         <strong><%= current_user.username %> :</strong>
         <%= comment.body %>
       </div>
       <div class="dropdown">
-        <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+        <button class="btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
         <span class="caret"></span></button>
           <ul class="dropdown-menu">
             <li><%= link_to 'Delete', post_comment_path(post, comment), class: 'delete-comment  fa fa-trash-o', data: { comment_id: comment.id } %></li>
             <li> <%= link_to 'Edit', 'javascript:;', class: 'edit-comment  fa fa-pencil', data: { comment_id: comment.id } %></li>
           </ul>
       </div>
-    </div><br><br>
+      <%= render partial: 'comment_likes/like', locals: { post: post, comment: comment } %>
+    </div>
   <% end %>
 </div>

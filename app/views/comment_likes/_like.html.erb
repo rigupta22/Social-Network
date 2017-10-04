@@ -1,0 +1,4 @@
+<%= link_to 'Like', comment_comment_likes_path(comment, post_id: post), class: 'comment-like', data: {comment_id: comment.id} %>
+<span class = 'likes-comment-<%= comment.id %>'>
+  <%= comment.likes.count %>
+</span>
