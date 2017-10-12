@@ -29,7 +29,7 @@ $(document).on('submit','#create-post', function(e){
   var user_id = this.getAttribute('data-user-id')
   var text_filed_id = "#" + ("post-" + user_id )
   if ($(text_filed_id).val() != "")
-  {
+  {debugger
     $.ajax({
       url: this.action,
       method: "POST",

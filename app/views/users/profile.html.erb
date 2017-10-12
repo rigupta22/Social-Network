@@ -1,0 +1,4 @@
+<%= @user.username %>
+<% if current_user.id != @user.id %>
+  <%= render partial: 'friend', locals: {user: @user} %>
+<% end %>

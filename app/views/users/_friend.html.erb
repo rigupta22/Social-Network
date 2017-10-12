@@ -1,0 +1,23 @@
+<% #binding.pry %>
+<%= form_with local: true, id: "friend-#{user.id}" do |form| %>
+  <% friend_request = user.friendships.find_by(friend_id: current_user.id) %>
+  <% if !friend_request %>
+    <% friendship = current_user.friendships.find_by(friend_id: user.id) %>
+    <% if !friendship %>
+      <%= form.submit "Add Friend", class: 'friend-status', data: {user_id: user.id} %>
+    <% elsif friendship.status == 'Pending' %>
+      <%= form.submit "Friend request sent", class: 'friend-status', data: {user_id: user.id}, disabled: true %>
+      <%= form.submit 'Cancel Request', class: 'cancel-request', data: {request_id: friendship.id } %>
+    <% else %>
+      <%= form.submit "Friends", class: 'friend-status', disabled: true %>
+      <%= form.submit 'Unfriend', class: 'delete-friend' %>
+    <% end %>
+  <% elsif friend_request.status == 'Pending' %>
+    <p> Sent you a friend request </p>
+    <%= form.submit "Accept", class: 'friend-status', data: {user_id: user.id} %>
+    <%= form.submit 'Delete', class: 'delete-request', data: {request_id: friend_request.id} %>
+  <% else %>
+    <%= form.submit "Friends", class: 'friend-status', data: {user_id: user.id}, disabled: true %>
+    <%= form.submit 'Unfriend', class: 'delete-friend', data: {request_id: friend_request.id} %>
+  <% end %>
+<% end %>
