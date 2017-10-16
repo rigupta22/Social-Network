@@ -1,9 +1,11 @@
 <div class = "show-field" >
-        <%= render partial: 'comments/new', locals: {post: post} %>
-        <h4>Comments</h4>
-        <div class="<%= post.id %>">
-        <% post.comments.reverse.each do |comment| %>
-          <%= render partial: 'comments/edit', locals: {comment: comment, post: post} %>
-        <% end %>
-        </div>
-</div><br><br>
+  <a class = 'fa fa-comment', data-toggle = 'collapse' data-target= ".<%=post.id %>, #new-comment-<%=post.id %>">Comment</a>
+  <div class="<%= post.id %> collapse" >
+    <% post.comments.each do |comment| %>
+      <%= render partial: 'comments/edit', locals: { comment: comment, post: post } %>
+    <% end %>
+  </div>
+  <div id = 'new-comment-<%= post.id %>' class = 'collapse'>
+    <%= render partial: 'comments/new', locals: {post: post} %>
+  </div>
+</div><br>

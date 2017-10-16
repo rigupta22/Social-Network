@@ -13,6 +13,7 @@ $(document).on('click','.delete-comment',function(e){
       type: "DELETE",
       success: function(result) {
         $(a).html(result);
+        $(a).removeClass('well');
       }
     });
 });
@@ -35,7 +36,7 @@ $(document).on('submit','#create-comment', function(e){
       method: "POST",
       data: $(this).serialize(),
       success: function(result) {
-        $(a).prepend(result.data)
+        $(a).append(result.data)
         $(text_filed_id).val("")
         $('.create-form').prop("disabled", false);
       }

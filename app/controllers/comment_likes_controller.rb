@@ -6,7 +6,7 @@ class CommentLikesController < ApplicationController
   private
 
   def set_object
-    post = current_user.posts.find(params[:post_id])
+    post = Post.find(params[:post_id])
     @object = post.comments.find(params[:comment_id])
     @like = @object.likes.find_by(liker: current_user.id)
   end

@@ -1,32 +1,48 @@
-<h2>Hello User!!! <%= current_user.username %>
 <% requests = Friendship.where(friend_id: current_user.id) %>
-<div class="dropdown">
-  <button class="fa fa-users fa-1" type="button" data-toggle="dropdown">
-  <span class="caret"></span></button>
-  <ul class="dropdown-menu">
-    <% requests.reverse_each do |request|%>
-      <% user = User.find(request.user_id) %>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">SocialNet</a>
+    </div>
+    <ul class="nav navbar-nav">
       <li>
-        <%= link_to user.username, profile_path(user.username) %> <br>
-        <%= render partial: 'friend', locals: {user: user} %>
-      </li><br>
+        <%= render partial: 'image', locals: { user: current_user, size: '50x50'}%>
+      </li>
+      <li class="active"><%= link_to 'Profile', profile_path(current_user.username) %></li>
+      <li><span class="input-group"><%= render partial: 'search' %></span></li>
+      <li>
+        <div class="dropdown">
+          <button class="fa fa-users fa-1" type="button" data-toggle="dropdown">
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <% requests.reverse_each do |request|%>
+              <% user = User.find(request.user_id) %>
+              <li><%= link_to user.username, profile_path(user.username) %><br>
+                <%= render partial: 'friend', locals: {user: user} %>
+              </li><br>
+            <% end %>
+          </ul>
+        </div>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><%= link_to 'logout', logout_path, method: :delete, class: "fa fa-sign-out" %></li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <h2>Hello <%= current_user.username %></h2>
+  <h3>Add a Post</h3>
+  <%= render 'posts/new' %>
+  <h3>Posts</h3>
+  <div class="user-posts">
+   <% friends = current_user.friendships.where(status: "Friends") %>
+   <% total_post = [] %>
+   <% friends.each do |user| %>
+    <% total_post << user.friend.posts %>
+   <% end %>
+   <% total_post << current_user.posts %>
+    <% total_post.flatten.sort.each.reverse_each do |post| %>
+      <%= render partial: 'posts/edit', locals: { post: post }   %>
     <% end %>
-  </ul>
 </div>
-</h2>
-<%= render partial: 'search' %>
-<%= link_to 'Profile', profile_path(current_user.username) %>
-<%if !current_user.image_url.nil? %>
-  <%= image_tag current_user.image_url %><br>
-<%else%>
-  <%= image_tag('5691490-profile-pictures.png') %><br>
-<%end%>
-<h3>Add a Post</h3>
-<%= render 'posts/new' %>
-<h3>Posts</h3>
-<div class="user-posts">
-  <% current_user.posts.reverse_each do |post| %>
-    <%= render partial: 'posts/edit', locals: {post: post} %>
-  <% end %>
-</div>
-<%= link_to 'logout', logout_path, method: :delete, class: "fa fa-sign-out" %>

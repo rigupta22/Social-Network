@@ -14,4 +14,3 @@ $(document).on('click','.post-like',function(e){
 //   $('.post-like').click(function(e) {
 //     e.preventDefault();
 //   });
-// });

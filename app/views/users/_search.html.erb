@@ -1,5 +1,4 @@
- <%= form_with( local: true, id: 'search-user', method: 'get') do |form| %>
- <%= form.label 'Search :'%>
+ <%= form_with( local: true, id: 'search-user', class: "navbar-form navbar-left", method: 'get') do |form| %>
  <%= form.text_field 'name', class: 'search-field', placeholder: 'Find Friends....' %>
  <%#= form.submit 'Search' %>
  <!-- <div class = 'error'></div> -->

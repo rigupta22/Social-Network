@@ -14,6 +14,7 @@ $(document).on('click','.delete-post',function(e){
       success: function(result) {
         debugger
         $(a).html(result);
+        $(a).removeClass('well');
       }
     });
 });
@@ -45,6 +46,7 @@ $(document).on('submit','#create-post', function(e){
 
 $(document).on('submit','#update-post', function(e){
   e.preventDefault();
+  debugger
   var post_id = this.getAttribute('data-post-id')
   var text_filed_id = "#" + ("post_text_" + post_id )
   var a = $(this.parentElement);
@@ -55,6 +57,7 @@ $(document).on('submit','#update-post', function(e){
       method: "PATCH",
       data: $(this).serialize(),
       success: function(result) {
+        debugger
         $(a.find('.show-field')).show();
         $(a.find('.edit-field')).hide();
         a.find('.post-body').html(" <strong>"+ result.user + " :</strong> "+ result.post.body);

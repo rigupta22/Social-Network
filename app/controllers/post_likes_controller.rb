@@ -6,7 +6,7 @@ class PostLikesController < ApplicationController
   private
 
   def set_object
-    @object = current_user.posts.find(params[:post_id])
+    @object = Post.find(params[:post_id])
     @like = @object.likes.find_by(liker: current_user.id)
   end
 end

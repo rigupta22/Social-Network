@@ -3,10 +3,11 @@ class CommentsController < ApplicationController
   before_action :set_comment, except: [:create]
 
   def create
-    post = current_user.posts.find(params[:post_id])
+    post = Post.find(params[:post_id])
     @comment = post.comments.create(comment_params.merge(user_id: current_user.id))
     render json: { data: (render_to_string partial: '/comments/edit',
-                                           locals: { comment: @comment, post: post }) }
+                                           locals: { comment: @comment,
+                                                     post: post }) }
   end
 
   def update
@@ -22,7 +23,7 @@ class CommentsController < ApplicationController
   private
 
   def set_comment
-    post = current_user.posts.find(params[:post_id])
+    post = Post.find(params[:post_id])
     @comment = post.comments.find(params[:id])
   end
 
